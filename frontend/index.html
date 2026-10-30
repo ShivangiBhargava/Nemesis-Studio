@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Nemesis Studio — Autonomous AI Engineering Engine | Nebius x NVIDIA</title>
+  <meta name="description" content="Production-grade autonomous multi-agent software engineering engine powered by NVIDIA Nemotron on Nebius Token Factory with real-time Tavily web intelligence and self-healing runtime.">
+  <meta name="keywords" content="Nebius Token Factory, NVIDIA Nemotron, Multi-Agent Systems, Tavily Search, Autonomous Code Generation, Self-Healing Code">
+  
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <meta property="og:title" content="Nemesis Studio — Autonomous AI Engineering Engine">
+  <meta property="og:description" content="Production-grade autonomous multi-agent software engineering engine powered by NVIDIA Nemotron on Nebius Token Factory with real-time Tavily web intelligence and self-healing runtime.">
+  <meta property="og:image" content="assets/thumbnail.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="assets/thumbnail.jpg">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- Top App Navigation Bar -->
+  <header class="app-header" id="main-header">
+    <div class="header-left">
+      <div class="brand-logo-wrap" id="brand-logo">
+        <img src="assets/logo.png" alt="Nemesis Logo" class="brand-logo-img">
+      </div>
+      <div class="brand-text">
+        <div class="brand-title-row">
+          <span class="brand-name">NEMESIS</span>
+          <span class="brand-sub">STUDIO</span>
+          <span class="brand-partner-badge">Nebius · NVIDIA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Telemetry Bar (Compact & Single-Line) -->
+    <div class="header-center-metrics" id="header-metrics">
+      <div class="status-chip">
+        <span class="led"></span>
+        <span class="chip-item"><span class="chip-k">Cluster:</span> <strong id="val-cluster" class="chip-v">H100 SXM5</strong></span>
+        <span class="chip-sep">/</span>
+        <span class="chip-item"><span class="chip-k">Throughput:</span> <strong id="val-speed" class="chip-v">108.4 t/s</strong></span>
+        <span class="chip-sep">/</span>
+        <span class="chip-item"><span class="chip-k">TTFT:</span> <strong id="val-ttft" class="chip-v">185 ms</strong></span>
+      </div>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <button class="btn btn-secondary btn-sm" id="btn-open-blueprint" title="System Architecture & Overview">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <span>Architecture</span>
+      </button>
+
+      <button class="btn btn-secondary btn-sm" id="btn-open-settings" title="Configure Nebius and Tavily API Keys">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span>Credentials</span>
+      </button>
+
+      <button class="btn btn-secondary btn-sm" id="btn-export-zip" title="Export Project Repository">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        <span>Export</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Application Stage -->
+  <main class="app-container">
+    <div class="studio-grid">
+
+      <!-- ================================================================
+           PANE 1: CONTROL SIDEBAR (Prompt, Templates, Agent Stepper)
+           ================================================================ -->
+      <aside class="studio-sidebar" id="pane-controls" aria-label="Workflow Controls">
+        
+        <!-- Input & Execution Box -->
+        <div class="panel-card">
+          <div class="card-header">
+            <span class="card-title">Specification</span>
+            <span class="badge-status" id="pipeline-status-badge">Ready</span>
+          </div>
+
+          <div class="card-body">
+            <!-- Template Pills -->
+            <div class="template-pills-row">
+              <button class="template-pill active" data-preset="microservice" id="preset-microservice">Microservice</button>
+              <button class="template-pill" data-preset="jetson_edge" id="preset-jetson">Jetson Edge</button>
+              <button class="template-pill" data-preset="cve_patcher" id="preset-cve">CVE SecOps</button>
+            </div>
+
+            <!-- Prompt Textarea -->
+            <div class="prompt-box-wrap">
+              <textarea 
+                id="prompt-input" 
+                class="prompt-textarea" 
+                placeholder="Describe your software requirements..."
+                rows="3"
+              >Architect and build an enterprise microservice with sliding-window rate limiting, Nebius Token Factory streaming integration, and automated container validation.</textarea>
+            </div>
+
+            <!-- Controls Row -->
+            <div class="prompt-controls">
+              <label class="toggle-switch-label" title="Inject an intentional bug to demonstrate Nemotron reflection and automatic AST diff patching">
+                <input type="checkbox" id="toggle-inject-bug" checked>
+                <div class="toggle-slider"></div>
+                <span>Inject Anomaly (Demo Self-Healing)</span>
+              </label>
+
+              <button class="btn btn-primary btn-run" id="btn-run-pipeline">
+                <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                Launch Pipeline
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orchestration Stepper -->
+        <div class="panel-card" style="margin-top: 12px;">
+          <div class="card-header">
+            <span class="card-title">Agent State Machine</span>
+            <span class="card-step-hint" id="dag-active-step">Idle</span>
+          </div>
+
+          <div class="card-body" style="padding: 10px;">
+            <div class="agent-stepper" id="agent-nodes-list">
+              <!-- Agent 1 -->
+              <div class="stepper-item idle" id="node-architect" data-agent="architect" title="Click to inspect Architect Agent">
+                <span class="step-num">01</span>
+                <div class="step-details">
+                  <div class="step-name">Architect Agent</div>
+                  <div class="step-model">Nemotron-70B</div>
+                </div>
+                <span class="step-state">Idle</span>
+              </div>
+
+              <!-- Agent 2 -->
+              <div class="stepper-item idle" id="node-researcher" data-agent="researcher" title="Click to inspect Web Intelligence Agent">
+                <span class="step-num">02</span>
+                <div class="step-details">
+                  <div class="step-name">Web Intelligence</div>
+                  <div class="step-model">Tavily Radar</div>
+                </div>
+                <span class="step-state">Idle</span>
+              </div>
+
+              <!-- Agent 3 -->
+              <div class="stepper-item idle" id="node-coder" data-agent="coder" title="Click to inspect Code Synthesizer">
+                <span class="step-num">03</span>
+                <div class="step-details">
+                  <div class="step-name">Code Synthesizer</div>
+                  <div class="step-model">Nemotron-70B</div>
+                </div>
+                <span class="step-state">Idle</span>
+              </div>
+
+              <!-- Agent 4 -->
+              <div class="stepper-item idle" id="node-critic" data-agent="critic" title="Click to inspect QA Critic">
+                <span class="step-num">04</span>
+                <div class="step-details">
+                  <div class="step-name">QA Sandbox Critic</div>
+                  <div class="step-model">Nemotron-Reward</div>
+                </div>
+                <span class="step-state">Idle</span>
+              </div>
+
+              <!-- Agent 5 -->
+              <div class="stepper-item idle" id="node-healer" data-agent="healer" title="Click to inspect Self-Healing Agent">
+                <span class="step-num">05</span>
+                <div class="step-details">
+                  <div class="step-name">Self-Healing Engine</div>
+                  <div class="step-model">Reflection AST</div>
+                </div>
+                <span class="step-state">Idle</span>
+              </div>
+            </div>
+
+            <!-- Compact Stream Box -->
+            <div class="stream-compact-box" id="reasoning-stream-box">
+              <span class="stream-placeholder">// Nebius Token Factory live reasoning stream...</span>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+
+      <!-- ================================================================
+           PANE 2: MAIN STAGE (IDE Workspace + Docked Console)
+           ================================================================ -->
+      <section class="studio-main-stage" id="pane-editor" aria-label="IDE and Execution Workspace">
+        
+        <!-- Upper Workspace: Monaco-Style Code Editor -->
+        <div class="panel-card editor-card">
+          <!-- Editor Tabs Bar -->
+          <div class="editor-tabs-bar" id="editor-tabs-bar">
+            <div class="editor-tabs" id="editor-tabs-container">
+              <button class="tab-btn active" data-file="main.py" id="tab-main-py">main.py</button>
+              <button class="tab-btn" data-file="config.py" id="tab-config-py">config.py</button>
+              <button class="tab-btn" data-file="test_suite.py" id="tab-test-py">test_suite.py</button>
+              <button class="tab-btn" data-file="Dockerfile" id="tab-dockerfile">Dockerfile</button>
+              <button class="tab-btn" data-file="__arch__" id="tab-arch-diagram">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Architecture
+              </button>
+              <button class="tab-btn diff-tab" data-file="__diff__" id="tab-diff-view" style="display: none;">
+                <span class="diff-indicator">●</span> Self-Healing Diff
+              </button>
+            </div>
+
+            <!-- Editor Action Buttons -->
+            <div class="editor-actions">
+              <button class="btn-icon" id="btn-edit-code" title="Toggle Code Edit Mode">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <span>Edit</span>
+              </button>
+              <button class="btn-icon" id="btn-copy-code" title="Copy Current File">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                <span>Copy</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Code Workspace Area -->
+          <div class="editor-workspace" id="editor-workspace">
+            <div class="editor-line-numbers" id="editor-line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16</div>
+            
+            <pre class="editor-code-container" id="editor-code-container" contenteditable="false"><code>"""
+NEMESIS STUDIO — AUTONOMOUS ENGINEERING ENGINE
+Powered by NVIDIA Nemotron-70B on Nebius Token Factory
+Awaiting pipeline dispatch to generate codebase...
+"""</code></pre>
+            
+            <!-- Unified Diff View Mode -->
+            <div class="diff-view" id="diff-view-container"></div>
+
+            <!-- Architecture Diagram View Mode -->
+            <div class="arch-view-container" id="arch-view-container" style="display: none;">
+              <div class="arch-diagram-card">
+                <div class="arch-diagram-title">System Architecture Topology</div>
+                <svg class="arch-svg-diagram" viewBox="0 0 760 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Ingestion -->
+                  <rect x="20" y="150" width="130" height="70" rx="6" fill="#141720" stroke="#76b900" stroke-width="1.5"/>
+                  <text x="85" y="182" fill="#ffffff" font-size="12" font-family="Inter" text-anchor="middle" font-weight="600">Client Ingestion</text>
+                  <text x="85" y="202" fill="#76b900" font-size="10" font-family="JetBrains Mono" text-anchor="middle">Async Requests</text>
+
+                  <path d="M150 185 L220 185" stroke="#76b900" stroke-width="2"/>
+                  <circle cx="185" cy="185" r="4" fill="#76b900"/>
+
+                  <!-- Rate Limiter -->
+                  <rect x="220" y="135" width="160" height="100" rx="6" fill="#141720" stroke="#2a2e3d" stroke-width="1.5"/>
+                  <text x="300" y="168" fill="#ffffff" font-size="12" font-family="Inter" text-anchor="middle" font-weight="600">Sliding Window Limiter</text>
+                  <text x="300" y="190" fill="#a1a1aa" font-size="10" font-family="JetBrains Mono" text-anchor="middle">Token Bucket Lock</text>
+                  <text x="300" y="210" fill="#76b900" font-size="9" font-family="JetBrains Mono" text-anchor="middle">20 t/s refill</text>
+
+                  <path d="M380 185 L450 185" stroke="#76b900" stroke-width="2"/>
+                  <circle cx="415" cy="185" r="4" fill="#76b900"/>
+
+                  <!-- Nebius Token Factory Core -->
+                  <rect x="450" y="120" width="180" height="130" rx="6" fill="#0d140e" stroke="#76b900" stroke-width="2"/>
+                  <text x="540" y="152" fill="#76b900" font-size="13" font-family="Inter" text-anchor="middle" font-weight="700">Nebius Token Factory</text>
+                  <text x="540" y="174" fill="#ffffff" font-size="10" font-family="JetBrains Mono" text-anchor="middle">NVIDIA Nemotron-70B</text>
+                  <text x="540" y="194" fill="#a1a1aa" font-size="10" font-family="JetBrains Mono" text-anchor="middle">H100 SXM5 Cluster</text>
+                  <text x="540" y="216" fill="#76b900" font-size="9" font-family="JetBrains Mono" text-anchor="middle">108.4 tokens/sec</text>
+
+                  <path d="M630 185 L680 185" stroke="#76b900" stroke-width="2"/>
+
+                  <!-- Telemetry Sink -->
+                  <rect x="680" y="150" width="70" height="70" rx="6" fill="#141720" stroke="#2a2e3d" stroke-width="1.5"/>
+                  <text x="715" y="185" fill="#ffffff" font-size="11" font-family="Inter" text-anchor="middle" font-weight="600">Sink</text>
+                  <text x="715" y="205" fill="#a1a1aa" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Metrics</text>
+
+                  <!-- Grounding Loop -->
+                  <path d="M540 120 L540 55 L300 55 L300 135" stroke="#76b900" stroke-dasharray="4" stroke-width="1.5"/>
+                  <rect x="370" y="35" width="140" height="38" rx="6" fill="#141720" stroke="#76b900" stroke-width="1.5"/>
+                  <text x="440" y="58" fill="#ffffff" font-size="10" font-family="Inter" text-anchor="middle">Tavily Grounding Radar</text>
+
+                  <!-- Self Healing Loop -->
+                  <path d="M540 250 L540 320 L180 320 L180 220" stroke="#ff2a5f" stroke-dasharray="4" stroke-width="1.5"/>
+                  <rect x="310" y="300" width="160" height="38" rx="6" fill="#1c0d12" stroke="#ff2a5f" stroke-width="1.5"/>
+                  <text x="390" y="324" fill="#ff2a5f" font-size="10" font-family="Inter" text-anchor="middle">Nemotron Reflection Loop</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lower Workspace: Integrated Console Dock (Tabbed, No Overfloating) -->
+        <div class="panel-card console-card" style="margin-top: 12px;">
+          <!-- Console Navigation Tabs -->
+          <div class="console-tabs-bar">
+            <div class="console-tabs">
+              <button class="console-tab-btn active" id="tab-console-sandbox">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span>Sandbox Terminal</span>
+                <span id="test-summary-badge" class="terminal-pass-badge" style="display: none;">4/4 PASS</span>
+              </button>
+
+              <button class="console-tab-btn" id="tab-console-tavily">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                <span>Web Intelligence</span>
+                <span class="console-pill-badge" id="tavily-latency-badge">Tavily Active</span>
+              </button>
+
+              <button class="console-tab-btn" id="tab-console-telemetry">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <span>Nebius Telemetry</span>
+              </button>
+            </div>
+
+            <!-- Console Actions -->
+            <div class="console-actions">
+              <button class="btn btn-secondary btn-sm" id="btn-manual-run" title="Re-run tests in sandbox">
+                <span>▶ Run Tests</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Console Content Views -->
+          <div class="console-views-container">
+            <!-- 1. Terminal Window -->
+            <div class="console-view active" id="view-console-sandbox">
+              <div class="terminal-body" id="terminal-body">[SANDBOX] Virtual execution container initialized (Linux 6.8 / glibc 2.39).
+Type 'help' below for diagnostic CLI utilities, or click Launch Pipeline.</div>
+              
+              <!-- Interactive CLI Prompt -->
+              <div class="terminal-cli-bar">
+                <span class="terminal-cli-prompt">&gt;</span>
+                <input type="text" id="terminal-cli-input" class="terminal-cli-input" placeholder="Enter CLI command (help, test, nebius status, clear)..." autocomplete="off">
+              </div>
+            </div>
+
+            <!-- 2. Tavily Web Grounding Radar -->
+            <div class="console-view" id="view-console-tavily" style="display: none;">
+              <div class="tavily-feed-card" id="tavily-feed-card">
+                <div class="tavily-results-list" id="tavily-results-list">
+                  <div class="tavily-result-item">
+                    <span class="tavily-item-title">Real-Time Search Grounding Engine</span>
+                    <p class="tavily-item-snippet">Queries live sources across GitHub, PyPI, NIST NVD, and NVIDIA developer documentation to eliminate hallucinations and integrate current CVE mitigations.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Nebius Telemetry View -->
+            <div class="console-view" id="view-console-telemetry" style="display: none;">
+              <div class="telemetry-grid-card" id="nebius-telemetry-card">
+                <div class="telemetry-grid-row">
+                  <div class="telemetry-grid-cell">
+                    <span class="k">Inference Cluster</span>
+                    <strong class="v">NVIDIA H100 SXM5 80GB</strong>
+                    <span class="sub">900 GB/s NVLink Fabric</span>
+                  </div>
+                  <div class="telemetry-grid-cell">
+                    <span class="k">Generation Throughput</span>
+                    <strong class="v" style="color: var(--nvidia-green);">108.4 tokens/sec</strong>
+                    <span class="sub">FP8 Tensor Core acceleration</span>
+                  </div>
+                  <div class="telemetry-grid-cell">
+                    <span class="k">Time to First Token</span>
+                    <strong class="v" style="color: #fff;">185 ms TTFT</strong>
+                    <span class="sub">-68% latency vs standard APIs</span>
+                  </div>
+                  <div class="telemetry-grid-cell">
+                    <span class="k">Total Tokens Streamed</span>
+                    <strong class="v" id="dock-tokens-count">0</strong>
+                    <span class="sub">Session aggregate</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ================================================================
+       MODALS (Minimalist, NVIDIA-Style)
+       ================================================================ -->
+  <!-- 1. Settings Modal -->
+  <div class="modal-overlay" id="modal-settings">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Cloud Infrastructure Credentials</div>
+        <button class="modal-close-btn" id="btn-close-settings">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-lead">
+          Nemesis includes high-throughput simulated clusters for instant testing. To connect live infrastructure, enter your keys below:
+        </p>
+
+        <div class="form-group">
+          <label class="form-label" for="input-nebius-key">Nebius AI Studio API Key</label>
+          <input type="password" id="input-nebius-key" class="form-input" placeholder="nebius-prod-api-key-...">
+          <div class="form-hint">Obtain from <a href="https://studio.nebius.ai" target="_blank">studio.nebius.ai</a></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-tavily-key">Tavily Search API Key</label>
+          <input type="password" id="input-tavily-key" class="form-input" placeholder="tvly-...">
+          <div class="form-hint">Obtain from <a href="https://tavily.com" target="_blank">tavily.com</a></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-model-flavor">NVIDIA Foundation Model</label>
+          <select id="select-model-flavor" class="form-input">
+            <option value="nvidia/Llama-3.1-Nemotron-70B-Instruct">nvidia/Llama-3.1-Nemotron-70B-Instruct (Recommended)</option>
+            <option value="nvidia/nemotron-mini-4b-instruct">nvidia/nemotron-mini-4b-instruct (Edge & Jetson Optimized)</option>
+            <option value="nvidia/Nemotron-4-340B-Instruct">nvidia/Nemotron-4-340B-Instruct (Enterprise Heavy Reasoning)</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-settings">Cancel</button>
+        <button class="btn btn-primary" id="btn-save-settings">Save Credentials</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Architecture Blueprint Modal -->
+  <div class="modal-overlay" id="modal-blueprint">
+    <div class="modal-content" style="max-width: 800px;">
+      <div class="modal-header">
+        <div class="modal-title">System Architecture & Technical Overview</div>
+        <button class="modal-close-btn" id="btn-close-blueprint">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="blueprint-content">
+          <h3 class="bp-heading">Autonomous Engineering Pipeline</h3>
+          <p class="bp-p">Nemesis Studio orchestrates a 5-agent state machine designed around rapid, low-latency reflection powered by <strong>NVIDIA Nemotron</strong> on <strong>Nebius Token Factory</strong> and grounded via <strong>Tavily</strong>.</p>
+          
+          <div class="bp-grid">
+            <div class="bp-card">
+              <strong>1. Architect Agent</strong>
+              <span>Nemotron-70B deconstructs user specs into modular interfaces and rate limiters.</span>
+            </div>
+            <div class="bp-card">
+              <strong>2. Web Grounding</strong>
+              <span>Tavily retrieves live documentation and CVE security advisories before coding.</span>
+            </div>
+            <div class="bp-card">
+              <strong>3. Synthesizer</strong>
+              <span>Emits typed Python/TypeScript codebases, pytest test suites, and Dockerfiles.</span>
+            </div>
+            <div class="bp-card">
+              <strong>4. Sandbox Critic</strong>
+              <span>Executes tests in an isolated Linux container, verifying exit codes and memory bounds.</span>
+            </div>
+            <div class="bp-card">
+              <strong>5. Self-Healing</strong>
+              <span>Triages stack traces, synthesizes AST unified diffs, and validates 100% test pass.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-close-blueprint-footer">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Agent Telemetry Inspector Modal -->
+  <div class="modal-overlay" id="modal-agent-inspector">
+    <div class="modal-content" style="max-width: 700px;">
+      <div class="modal-header">
+        <div class="modal-title" id="inspector-modal-title">Agent Telemetry & Prompt Inspector</div>
+        <button class="modal-close-btn" id="btn-close-inspector">&times;</button>
+      </div>
+      <div class="modal-body" id="inspector-modal-body">
+        <!-- Injected dynamically by app.js -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-close-inspector-footer">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

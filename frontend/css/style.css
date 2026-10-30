@@ -1,0 +1,638 @@
+/* ==========================================================================
+   NEMESIS STUDIO — NVIDIA x NEBIUS DESIGN SYSTEM
+   Clean, Minimalist, High-Contrast Developer Interface
+   Zero Text Overfloating, Fully Responsive Across All Devices
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@500;600;700;800&display=swap');
+
+:root {
+  /* NVIDIA x Nebius Color System */
+  --bg-app: #08090d;
+  --bg-surface: #101117;
+  --bg-surface-elevated: #15161f;
+  --bg-subtle: rgba(255, 255, 255, 0.03);
+  
+  /* Primary Accent: NVIDIA Green */
+  --nvidia-green: #76b900;
+  --nvidia-green-hover: #8ae000;
+  --nvidia-green-subtle: rgba(118, 185, 0, 0.09);
+  --nvidia-green-border: rgba(118, 185, 0, 0.28);
+  --nvidia-green-glow: 0 0 16px rgba(118, 185, 0, 0.35);
+
+  /* Secondary Accents */
+  --accent-alert: #ff2a5f;
+  --accent-warn: #eab308;
+  
+  /* Hairline Borders */
+  --border-hairline: rgba(255, 255, 255, 0.07);
+  --border-card: rgba(255, 255, 255, 0.1);
+  --border-focus: var(--nvidia-green);
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', var(--font-sans);
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-dim: #64748b;
+  --text-inverse: #050505;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+
+  /* Transitions */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  min-width: 0; /* Crucial: Prevents flex and grid children from overflowing */
+}
+
+html {
+  font-size: 13.5px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.45;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(ellipse at 15% 10%, rgba(118, 185, 0, 0.05) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 80%, rgba(118, 185, 0, 0.03) 0%, transparent 45%),
+    linear-gradient(to bottom, #090a0f, var(--bg-app));
+  background-attachment: fixed;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--nvidia-green);
+}
+
+/* ==========================================================================
+   Header & Navbar (Clean, High-Contrast, No Clutter)
+   ========================================================================== */
+.app-header {
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(9, 10, 15, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-hairline);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.brand-logo-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--nvidia-green-border);
+  box-shadow: 0 0 10px rgba(118, 185, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  flex-shrink: 0;
+}
+.brand-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #fff;
+}
+
+.brand-sub {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--nvidia-green);
+}
+
+.brand-partner-badge {
+  font-size: 0.62rem;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-hairline);
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+}
+
+/* Center Status Chip */
+.header-center-metrics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+.status-chip .led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--nvidia-green);
+  box-shadow: 0 0 8px var(--nvidia-green);
+  animation: pulse-led 2s infinite ease-in-out;
+  flex-shrink: 0;
+}
+
+@keyframes pulse-led {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.chip-item {
+  color: var(--text-primary);
+}
+.chip-k {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+.chip-v {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: #fff;
+}
+.chip-sep {
+  color: var(--border-hairline);
+  font-size: 0.7rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Buttons (Minimalist, NVIDIA-Style)
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 120ms var(--ease);
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn-primary {
+  background: var(--nvidia-green);
+  color: #030601;
+  font-weight: 600;
+  border-color: var(--nvidia-green);
+}
+.btn-primary:hover {
+  background: var(--nvidia-green-hover);
+  border-color: var(--nvidia-green-hover);
+  box-shadow: var(--nvidia-green-glow);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-secondary {
+  background: var(--bg-surface);
+  border-color: var(--border-hairline);
+  color: var(--text-primary);
+}
+.btn-secondary:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-card);
+}
+
+.btn-sm {
+  padding: 5px 9px;
+  font-size: 0.74rem;
+}
+
+.btn-icon {
+  background: transparent;
+  border: 1px solid var(--border-hairline);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+.btn-icon:hover {
+  background: var(--bg-subtle);
+  color: #fff;
+  border-color: var(--border-card);
+}
+
+/* ==========================================================================
+   Studio Grid Layout (2-Column IDE Architecture)
+   ========================================================================== */
+.app-container {
+  max-width: 1720px;
+  margin: 0 auto;
+  padding: 14px 20px 24px 20px;
+}
+
+.studio-grid {
+  display: grid;
+  grid-template-columns: 310px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+/* Cards & Containers */
+.panel-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-hairline);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.card-title {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.card-body {
+  padding: 12px 14px;
+}
+
+.card-step-hint {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--nvidia-green);
+}
+
+.badge-status {
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--nvidia-green-subtle);
+  color: var(--nvidia-green);
+  border: 1px solid var(--nvidia-green-border);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+/* Template Pills */
+.template-pills-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.template-pill {
+  padding: 6px 4px;
+  background: var(--bg-app);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 120ms ease;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.template-pill:hover {
+  background: var(--bg-surface-elevated);
+  color: #fff;
+  border-color: var(--border-card);
+}
+.template-pill.active {
+  background: var(--nvidia-green-subtle);
+  border-color: var(--nvidia-green-border);
+  color: var(--nvidia-green);
+  font-weight: 600;
+}
+
+/* Prompt Box */
+.prompt-box-wrap {
+  margin-bottom: 10px;
+}
+.prompt-textarea {
+  width: 100%;
+  height: 80px;
+  background: var(--bg-app);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  resize: vertical;
+  outline: none;
+  line-height: 1.45;
+  transition: border-color 150ms ease;
+}
+.prompt-textarea:focus {
+  border-color: var(--nvidia-green);
+}
+
+.prompt-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-run {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+}
+
+.toggle-switch-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+.toggle-switch-label input {
+  display: none;
+}
+.toggle-slider {
+  width: 28px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  position: relative;
+  transition: background 150ms ease;
+  flex-shrink: 0;
+}
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 150ms ease;
+}
+.toggle-switch-label input:checked + .toggle-slider {
+  background: var(--accent-alert);
+}
+.toggle-switch-label input:checked + .toggle-slider::after {
+  transform: translateX(12px);
+}
+
+/* ==========================================================================
+   Agent Stepper (Minimalist, Elegant, No Bloat)
+   ========================================================================== */
+.agent-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stepper-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--bg-app);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+.stepper-item:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-card);
+}
+
+.stepper-item.active {
+  border-color: var(--nvidia-green-border);
+  background: var(--nvidia-green-subtle);
+}
+.stepper-item.completed {
+  border-color: rgba(118, 185, 0, 0.2);
+}
+
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  font-weight: 600;
+  width: 16px;
+  flex-shrink: 0;
+}
+.stepper-item.active .step-num {
+  color: var(--nvidia-green);
+}
+
+.step-details {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.step-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.step-model {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+}
+
+.step-state {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.stepper-item.active .step-state {
+  background: var(--nvidia-green);
+  color: #000;
+  font-weight: 700;
+  animation: pulse-badge 1s infinite alternate;
+}
+.stepper-item.completed .step-state {
+  color: var(--nvidia-green);
+  background: rgba(118, 185, 0, 0.1);
+}
+
+@keyframes pulse-badge {
+  from { opacity: 0.8; }
+  to { opacity: 1; }
+}
+
+.stream-compact-box {
+  margin-top: 10px;
+  height: 90px;
+  background: var(--bg-app);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #a7f3d0;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.35;
+}
+.stream-placeholder {
+  color: var(--text-dim);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .studio-grid {
+    grid-template-columns: 1fr;
+  }
+  .app-container {
+    padding: 12px 14px 20px 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    height: auto;
+    padding: 10px 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .header-center-metrics {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  .header-actions {
+    order: 2;
+  }
+  .brand-partner-badge {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .template-pills-row {
+    grid-template-columns: 1fr;
+  }
+  .header-actions span {
+    display: none; /* Icon-only on small mobile screens */
+  }
+  .btn-sm {
+    padding: 5px 8px;
+  }
+}

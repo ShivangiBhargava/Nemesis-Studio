@@ -1,0 +1,16 @@
+{
+  "name": "nemesis-agent-studio-backend",
+  "version": "1.0.0",
+  "description": "Autonomous Multi-Agent Engineering Studio powered by NVIDIA Nemotron on Nebius Token Factory & Tavily Web Intelligence",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2"
+  }
+}
