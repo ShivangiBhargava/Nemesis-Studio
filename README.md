@@ -96,9 +96,8 @@ nemesis-agent-studio/
 │       ├── logo.png            # Application emblem
 │       └── hero_banner.jpg     # UI hero artwork
 ├── docs/
-│   ├── ARCHITECTURE.md         # Detailed system architecture & Mermaid diagrams
-│   ├── DEVPOST_SUBMISSION.md   # System overview and technical documentation
-│   └── PITCH_DECK.md           # Executive presentation deck
+│   ├── ARCHITECTURE.md         # Detailed system architecture 
+│   └── Nemesis_Pitch_Deck      # Executive presentation deck
 ├── Dockerfile                  # Container definition
 ├── docker-compose.yml          # Container orchestration
 ├── .env.example                # Environment configuration template
